@@ -1,0 +1,45 @@
+<html>
+<head>
+</head>
+	<link rel=stylesheet type=text/css href="{{url_for('static', filename='catstyles.css')}}">
+	<link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+<body>
+	<header>
+		<span style="background-color: white">
+		 <a href='{{url_for('homepage')}}'>MIT Activities </a>
+		</span>
+	</header>
+	<h1>&lt;{{category.name}}&gt;</h1>
+
+	{% for club in clubs: %}
+	<div class = 'list'>
+		<p class='clubname'>{{club.name}}</p>
+		<br />
+		{{club.description}}
+		<br />
+		{% if club.link: %}
+		<a href="{{club.link}}">{{club.link}}</a>
+		{% endif %}
+		<br />
+		<br />
+		<a href='{{url_for('clubInfo', category_id = category.id, club_id = club.id)}}'>+ See more</a>
+		<br />
+	</div>
+	{% endfor %}
+
+
+	<div class='foot'>
+		<p class='browse'>Browse categories:</p>
+			<div class='links'>
+				{% for category in categories: %}
+				<a href='{{url_for('clubCategory',category_id = category.id)}}'>{{category.name}}</a>
+				{% endfor %}
+			</div>
+	</div>
+	
+</body>
+
+
+
+</html>

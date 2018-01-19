@@ -1,0 +1,21 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='clubstyles.css')}}">
+	<link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+	<h1>Edit: {{clubs.name}}</h1>
+	<form action='{{url_for('editClub', category_id = category.id, club_id = clubs.id)}}' method = 'post' id="editform">
+		<div id="fields">
+			<input type="text" size = "50" value = '{{clubs.name}}' name = 'name'>
+			<br><br>
+			<textarea rows="8" cols="75" name = 'description'>{{clubs.description}}</textarea>
+			<br><br>
+			<input type="text" size="75" value = '{{clubs.link}}' name = 'link'>
+			<input type="submit" value="Submit">
+		</div>
+	</form>
+	<a href='{{url_for('clubInfo',category_id = category.id, club_id = clubs.id)}}' class ='cancel'>Cancel</a>
+</body>
+</html>

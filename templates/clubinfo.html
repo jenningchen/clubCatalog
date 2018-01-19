@@ -1,0 +1,28 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='clubstyles.css')}}">
+	<link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+
+	<h1>{{clubs.name}}</h1>
+	<p>{{clubs.description}} </p>
+	<a href='{{clubs.link}}'>{{clubs.link}}</a>
+	<br><br><br>
+	<a href = '{{url_for('editClub',category_id = category.id, club_id = clubs.id)}}' class = 'change'>Edit &nbsp;</a>
+	<a href = '{{url_for('deleteClub',category_id = category.id, club_id = clubs.id)}}' class = 'change'>Delete</a>
+	<br><br>
+	<a href ='{{url_for('clubCategory', category_id = category.id)}}'>Return to {{category.name}}</a>
+	<div class='foot'>
+	<hr>
+		<p class='browse'>Browse categories:</p>
+			<div class='links'>
+				{% for category in categories: %}
+				<a href='{{url_for('clubCategory',category_id = category.id)}}'>{{category.name}}</a>
+				{% endfor %}
+			</div>
+	</div>
+
+</body>
+</html>

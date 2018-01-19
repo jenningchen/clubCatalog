@@ -1,0 +1,38 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='styles.css')}}">
+	<!--
+	<link rel="stylesheet" type="text/css" href="styles.css">
+-->
+	<link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+</head>
+
+<body>
+	<div class='mainimage'>
+		<header>
+			<h1 class='title'>MIT Activities</h1>
+			<div class='rightbar'>
+				<h2><a href='{{url_for('showLogin')}}'>Login</a></h2>
+			</div>
+		</header>
+
+		<p class='maintext'><span style="background-color: #FFE1C3">View <br /> Clubs + <br /> Organizations.<span style="background-color: #FFE1C3"></p>
+	</div>
+	<div class='general'>
+		<p>MIT boasts a large number of student groups and campus organizations. <br /> Herein lie several which have on-line information available.</p>
+	</div>
+	<div class='foot'>
+		<p class='browse'>Browse categories:</p>
+			<div class='links'>
+				{% for category in categories: %}
+				<a href='{{url_for('clubCategory',category_id = category.id)}}'>{{category.name}}</a>
+				{% endfor %}
+			</div>
+	</div> 
+
+</body>
+
+
+</html>

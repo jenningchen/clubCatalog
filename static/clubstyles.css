@@ -1,0 +1,85 @@
+body{
+	font-family: 'Roboto', sans-serif;
+	padding:10%;
+	margin:0;
+	box-sizing: border-box;
+	background-color: #ffe5cb;
+}
+h1{
+	font-size: 50pt;
+	text-align: center;
+	border-bottom: 3px solid white;
+}
+p{
+	font-size: 25pt;
+}
+
+.clubname{
+	font-size:16px;
+	margin:3px;
+	font-weight: bolder;
+	border-bottom: 1px solid black;
+}
+.foot{
+	font-family: 'Spectral SC', serif;
+	font-size: 20pt;
+	padding: 5% 0;
+}
+.browse{
+	text-align: center;
+	padding-bottom:0;
+	font-size:30pt;
+}
+.links{
+	text-align: center;
+	display:flex;
+	justify-content: space-evenly;
+	-webkit-flex-flow: row wrap;
+}
+a{
+	width: 30%;
+	font-size: 15pt;
+	display: inline-block;
+}
+a:link{
+	text-decoration: none;
+	color: black;
+}
+a:hover{
+	font-weight: bold;
+}
+a:visited{
+	color: black;
+}
+.change{
+	width: unset;
+}
+form{
+	font-size: 30px;
+}
+input{
+	display: block;
+	margin: 0 auto;
+	font-size: 30px;
+	padding: 5px 10px;
+	border-radius: 2px;
+	border-color: lightgrey;
+}
+textarea{
+	display: block;
+	margin: 0 auto;
+	font-size: 30px;
+	padding: 5px 10px;
+	border-radious: 2px;
+	border-color: lightgrey;
+}
+#fields{
+	margin: 0 auto;
+}
+#clarify{
+	text-align: center;
+}
+.cancel{
+	text-align: center;
+	width: 100%;
+}

@@ -1,0 +1,33 @@
+body{
+	font-family: 'Roboto', sans-serif;
+	padding:10%;
+	margin:0;
+	box-sizing: border-box;
+	background-color: #ffe5cb;
+}
+h1{
+	font-size: 60pt;
+	text-align: right;
+	border-bottom: 3px solid white;
+}
+div{
+	display:inline-block;
+	width:40%;
+	margin: 3% 1%;
+	padding:1% 3%;
+	font-size:10pt;
+	text-align:left;
+	background-color:white;
+	box-shadow: grey 0px 8px 30px;
+}
+.clubname{
+	font-size:16px;
+	margin:3px;
+	font-weight: bolder;
+	border-bottom: 1px solid black;
+}
+.links{
+	display:flex;
+	justify-content: space-evenly;
+	-webkit-flex-flow: row wrap;
+}

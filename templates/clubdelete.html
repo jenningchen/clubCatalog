@@ -1,0 +1,17 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='clubstyles.css')}}">
+	<link href="https://fonts.googleapis.com/css?family=Spectral+SC" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+</head>
+<body>
+	<h1>Delete: {{clubs.name}}</h1>
+	<form action='{{url_for('deleteClub', category_id = category.id, club_id = clubs.id)}}' method = 'post' id="deleteform">
+		<p id = 'clarify'>Are you sure?</p>
+		<div id="fields">
+			<input type="submit" value="Delete">
+		</div>
+	</form>
+	<a href='{{url_for('clubInfo',category_id = category.id, club_id = clubs.id)}}' class = 'cancel'>Cancel</a>
+</body>
+</html>
