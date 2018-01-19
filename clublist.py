@@ -146,6 +146,7 @@ club14 = Club(user_id = 1, name = "Society of Women Engineers",
 session.add(club14)
 session.commit()
 
+# add the rest of the categories
 
 category2 = Category(user_id = 1, name="Arts")
 

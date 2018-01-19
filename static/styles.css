@@ -1,73 +1,86 @@
-body{
+body {
 	font-family: 'Roboto', sans-serif;
-	padding:0;
-	margin:0;
+	padding: 0;
+	margin: 0;
 	box-sizing: border-box;
 	font-family: 'Spectral SC', serif;
 }
-header{
+
+header {
 	font-family: 'Spectral SC', serif;
-	overflow:hidden;
-	background-color:white;
-	padding:0% 2%;
-	height:80px;
+	overflow: hidden;
+	background-color: white;
+	padding: 0% 2%;
+	height: 80px;
 }
-.title{
-	float:left;
+
+.title {
+	float: left;
 }
-.mainimage{
+
+.mainimage {
 	background-image: url("stata.jpg");
 	height: 100%;
 	background-size: 100% 100%;
 }
-.rightbar{
-	float:right;
+
+.rightbar {
+	float: right;
 }
-.general{
+
+.general {
 	background-color: white;
 }
-.maintext{
+
+.maintext {
 	font-family: 'Roboto', sans-serif;
 	font-size: 8em;
 	line-height: 120%;
 	clear:both;
 	text-align: left;
-	padding-top:3%;
-	padding-left:10%;
+	padding-top: 3%;
+	padding-left: 10%;
 }
-p{
+
+p {
 	text-align: center;
-	padding:5%;
-	font-size:30px;
+	padding: 5%;
+	font-size: 30px;
 }
-.foot{
-	background-color:#ffe6cd;
+
+.foot {
+	background-color: #ffe6cd;
 	font-size: 20pt;
-	padding-bottom:5%;
+	padding-bottom: 5%;
 }
-.browse{
-	background-color:#ffe6cd;
-	padding-bottom:0;
-	font-size:30pt;
+
+.browse {
+	background-color: #ffe6cd;
+	padding-bottom: 0;
+	font-size: 30pt;
 }
-.links{
-	text-align:center;
-	display:flex;
+
+.links {
+	text-align: center;
+	display: flex;
 	justify-content: space-evenly;
 	-webkit-flex-flow: row wrap;
 }
-a{
+
+a {
 	display: inline-block;
     width: 30%;
     text-align: center;
 }
-a:link{
-	text-decoration:none;
-	color:black;
+a:link {
+	text-decoration: none;
+	color: black;
 }
-a:visited{
-	color:black;
+
+a:visited {
+	color: black;
 }
-a:hover{
-	font-weight:bold;
+
+a:hover {
+	font-weight: bold;
 }

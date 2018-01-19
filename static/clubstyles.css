@@ -1,63 +1,75 @@
-body{
+body {
 	font-family: 'Roboto', sans-serif;
 	padding:10%;
 	margin:0;
 	box-sizing: border-box;
 	background-color: #ffe5cb;
 }
-h1{
+
+h1 {
 	font-size: 50pt;
 	text-align: center;
 	border-bottom: 3px solid white;
 }
-p{
+
+p {
 	font-size: 25pt;
 }
 
-.clubname{
-	font-size:16px;
-	margin:3px;
+.clubname {
+	font-size: 16px;
+	margin: 3px;
 	font-weight: bolder;
 	border-bottom: 1px solid black;
 }
-.foot{
+
+.foot {
 	font-family: 'Spectral SC', serif;
 	font-size: 20pt;
 	padding: 5% 0;
 }
-.browse{
+
+.browse {
 	text-align: center;
-	padding-bottom:0;
-	font-size:30pt;
+	padding-bottom: 0;
+	font-size: 30pt;
 }
-.links{
+
+.links {
 	text-align: center;
-	display:flex;
+	display: flex;
 	justify-content: space-evenly;
 	-webkit-flex-flow: row wrap;
 }
-a{
+
+a {
 	width: 30%;
 	font-size: 15pt;
 	display: inline-block;
 }
-a:link{
+
+a:link {
 	text-decoration: none;
 	color: black;
 }
-a:hover{
+
+a:hover {
 	font-weight: bold;
 }
-a:visited{
+
+a:visited {
 	color: black;
 }
-.change{
+
+.change {
 	width: unset;
 }
-form{
+
+form {
 	font-size: 30px;
 }
-input{
+
+input {
 	display: block;
 	margin: 0 auto;
 	font-size: 30px;
@@ -65,7 +77,8 @@ input{
 	border-radius: 2px;
 	border-color: lightgrey;
 }
-textarea{
+
+textarea {
 	display: block;
 	margin: 0 auto;
 	font-size: 30px;
@@ -73,13 +86,16 @@ textarea{
 	border-radious: 2px;
 	border-color: lightgrey;
 }
-#fields{
+
+#fields {
 	margin: 0 auto;
 }
-#clarify{
+
+#clarify {
 	text-align: center;
 }
-.cancel{
+
+.cancel {
 	text-align: center;
 	width: 100%;
 }

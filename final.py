@@ -6,8 +6,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from database_setup import Base, Category, Club, User
 
-
-engine = create_engine('sqlite:///mitclubswithusers.db')     # create engine
+# create engine
+engine = create_engine('sqlite:///mitclubswithusers.db')     
 Base.metadata.bind = engine
 
 from flask import session as login_session
@@ -35,10 +35,12 @@ def createUser(login_session):
     user = session.query(User).filter_by(googid = login_session['googid']).one()
     return user.id
 
+# fetch user given user id
 def getUserInfo(user_id):
     user = session.query(User).filter_by(id = user_id).one()
     return user
 
+# fetch user id given google id
 def getUserID(googid):
     try:
         user = session.query(User).filter_by(googid = googid).one()
@@ -46,7 +48,7 @@ def getUserID(googid):
     except:
         return None
 
-# 1: create homepage, DONE
+# create homepage
 @app.route('/clubs')
 @app.route('/')
 def homepage():
@@ -56,17 +58,16 @@ def homepage():
     print(getUserID(login_session['googid']))
     return render_template('home.html', categories = categories)
 
+# login page
 @app.route('/login')
 def showLogin():
     state = ''.join(random.choice(string.ascii_uppercase + string.digits) for x in range(32))
     login_session['state'] = state
     return render_template('login.html', STATE = state)
 
+# to connect
 @app.route('/gconnect', methods=['POST'])
-def gconnect():
-
-    print ('made it to gconnect')
-    
+def gconnect():    
     # Validate state token
     if request.args.get('state') != login_session['state']:
         response = make_response(json.dumps('Invalid state parameter.'), 401)
@@ -74,8 +75,6 @@ def gconnect():
         return response
     # Obtain authorization code
     code = request.data
-    print('made it to 1')
-
     try:
         # Upgrade the authorization code into a credentials object
         oauth_flow = flow_from_clientsecrets('client_secrets.json', scope='')
@@ -87,9 +86,6 @@ def gconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-    print('made it to 2')
-
-    
     # Check that the access token is valid.
     access_token = credentials.access_token
     url = ('https://www.googleapis.com/oauth2/v1/tokeninfo?access_token=%s'
@@ -101,8 +97,6 @@ def gconnect():
         response = make_response(json.dumps(result.get('error')), 500)
         response.headers['Content-Type'] = 'application/json'
         return response
-
-    print('made it to 3')
     
     # Verify that the access token is used for the intended user.
     gplus_id = credentials.id_token['sub']
@@ -111,8 +105,6 @@ def gconnect():
             json.dumps("Token's user ID doesn't match given user ID."), 401)
         response.headers['Content-Type'] = 'application/json'
         return response
-
-    print('made it to 4')
 
     # Verify that the access token is valid for this app.
     if result['issued_to'] != CLIENT_ID:
@@ -140,11 +132,9 @@ def gconnect():
     answer = requests.get(userinfo_url, params=params)
     data = answer.json()
 
-
     login_session['username'] = data['name']
     login_session['picture'] = data['picture']
     login_session['googid'] = data['id']
-
 
     # Verify if user is already registered
     # if user is not registered, then create account
@@ -164,6 +154,7 @@ def gconnect():
     print ("done!")
     return output
 
+# log out
 @app.route('/gdisconnect')
 def gdisconnect():
     access_token = login_session.get('access_token')
@@ -194,17 +185,19 @@ def gdisconnect():
         response.headers['Content-Type'] = 'application/json'
         return response
 
-# 2: view each category, DONE
+# view each category
 @app.route('/clubs/<int:category_id>')
 def clubCategory(category_id):
     categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
-    clubs = session.query(Club).filter_by(category_id = category.id) 
+    clubs = session.query(Club).filter_by(category_id = category.id)
+    # public template
     if 'username' not in login_session:
         return render_template('publiccategory.html', category = category, clubs = clubs, categories = categories)
+    # private template
     return render_template('category.html', category = category, clubs=clubs, categories=categories)
 
-# 3: individual club info, DONE
+# view individual club info
 @app.route('/clubs/<int:category_id>/<int:club_id>')
 def clubInfo(category_id, club_id):
     categories = session.query(Category).all()
@@ -214,14 +207,17 @@ def clubInfo(category_id, club_id):
         creator = getUserInfo(clubs.user_id)
     except:
         pass
+    # public template
     print('username' not in login_session)
     if 'username' not in login_session or creator.id != getUserID(login_session['googid']):
         return render_template('publicclubinfo.html', categories = categories, category = category, clubs = clubs)
+    # private template
     return render_template('clubinfo.html', categories = categories, category = category, clubs = clubs)
 
-# 5: add club from category, DONE
+# page to add club, linked from category page
 @app.route('/clubs/<int:category_id>/new', methods=['GET','POST'])
 def addClub(category_id):
+    # redirect user to login if not already
     if 'username' not in login_session:
         return redirect('\login')
     category = session.query(Category).filter_by(id=category_id).one()
@@ -229,18 +225,19 @@ def addClub(category_id):
         newClub = Club(user_id = getUserID(login_session['googid']), name = request.form['name'], description = request.form['description'], link = request.form['link'], category = category)
         session.add(newClub)
         session.commit()
+        # redirect back to category page, after adding
         return redirect(url_for('clubCategory', category_id = category.id))
     else:
         return render_template('clubcreate.html', category = category)
 
-# 6: edit club from individual club info, DONE
+# edit club from individual club info
 @app.route('/clubs/<int:category_id>/<int:club_id>/edit', methods=['GET','POST'])
 def editClub(category_id,club_id):
     categories = session.query(Category).all()
-    print(len(categories))
     category = session.query(Category).filter_by(id=category_id).one()
     clubs = session.query(Club).filter_by(id= club_id).one()
     if request.method == 'POST':
+        # populate club fields
         if request.form['name']:
             clubs.name = request.form['name']
             session.add(clubs)
@@ -258,7 +255,7 @@ def editClub(category_id,club_id):
     else:           
         return render_template('clubedit.html', categories = categories, category = category, clubs = clubs)
 
-# 7: delete club from individual club info and from database, DONE
+# delete club from individual club info and from database
 @app.route('/clubs/<int:category_id>/<int:club_id>/delete', methods=['GET','POST'])
 def deleteClub(category_id,club_id):
     categories = session.query(Category).all()
@@ -274,24 +271,26 @@ def deleteClub(category_id,club_id):
 
 # JSON
 
+# all clubs
 @app.route('/clubs/JSON')
 def clubsJSON():
     clubs = session.query(Club).all()
     return jsonify(clubs = [club.serialize for club in clubs])
 
-
+# all categories
 @app.route('/clubs/categories/JSON')
 def categoriesJSON():
     categories = session.query(Category).all()
     return jsonify(categories = [cat.serialize for cat in categories])
 
+# all clubs in a particular category
 @app.route('/clubs/<path:categoryName>/clublist/JSON')
 def categoryClubsJSON(categoryName):
     category = session.query(Category).filter_by(name = categoryName).one()
     clubs = session.query(Club).filter_by(category = category).all()
     return jsonify(clubs = [club.serialize for club in clubs])
     
-
+# a particular club given the club name and category name
 @app.route('/clubs/<path:categoryName>/<path:clubName>/JSON')
 def clubJSON(categoryName, clubName):
     club = session.query(Club).filter_by(name = clubName).one()
