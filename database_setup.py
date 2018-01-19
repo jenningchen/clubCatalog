@@ -10,19 +10,21 @@ from sqlalchemy import create_engine
 
 Base = declarative_base()
 
+
 # create User table
 class User(Base):
     __tablename__ = 'user'
-    id = Column(Integer, primary_key = True)
-    name = Column(String(250), nullable = False)
-    googid = Column(String(300), nullable = False)
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    googid = Column(String(300), nullable=False)
     picture = Column(String(250))
+
 
 # create Category table
 class Category(Base):
     __tablename__ = 'category'
-    name = Column(String(80), nullable = False)
-    id = Column(Integer, primary_key = True)
+    name = Column(String(80), nullable=False)
+    id = Column(Integer, primary_key=True)
     user_id = Column(Integer, ForeignKey('user.id'))
     user = relationship(User)
 
@@ -33,11 +35,12 @@ class Category(Base):
             'id': self.id
         }
 
+
 # create Club table
 class Club(Base):
     __tablename__ = 'club'
-    name = Column(String(80), nullable = False)
-    id = Column(Integer, primary_key = True)
+    name = Column(String(80), nullable=False)
+    id = Column(Integer, primary_key=True)
     description = Column(String(1000))
     link = Column(String(200))
     category_id = Column(Integer, ForeignKey('category.id'))
@@ -55,7 +58,7 @@ class Club(Base):
             'link': self.link,
             'category': self.category.name
         }
-    
+
 
 # create database
 engine = create_engine("sqlite:///mitclubswithusers.db")
