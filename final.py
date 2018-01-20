@@ -240,7 +240,7 @@ def clubInfo(category_id, club_id):
 def addClub(category_id):
     # redirect user to login if not already
     if 'username' not in login_session:
-        return redirect('\login')
+        return redirect('/login')
     category = session.query(Category).filter_by(id=category_id).one()
     if request.method == 'POST':
         newClub = Club(user_id=getUserID(login_session['googid']),
@@ -260,24 +260,30 @@ def addClub(category_id):
 @app.route('/clubs/<int:category_id>/<int:club_id>/edit',
            methods=['GET', 'POST'])
 def editClub(category_id, club_id):
+    # redirect user to login if not already
+    if 'username' not in login_session:
+        return redirect('/login')
     categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
     clubs = session.query(Club).filter_by(id=club_id).one()
+    # authorization
+    try:
+        creator = getUserInfo(clubs.user_id)
+    except:
+        pass
+    if creator.id != getUserID(login_session['googid']):
+        return redirect(url_for('addClub', category_id=category.id))
     if request.method == 'POST':
         # populate club fields
         if request.form['name']:
             clubs.name = request.form['name']
-            session.add(clubs)
-            session.commit()
         if request.form['description']:
             clubs.description = request.form['description']
-            session.add(clubs)
-            session.commit()
         if request.form['link']:
             clubs.link = request.form['link']
+        if (request.form['name']) or (request.form['description']) or request.form['link']:
             session.add(clubs)
             session.commit()
-        if (request.form['name']) or (request.form['description']) or request.form['link']:
             return redirect(url_for('clubInfo', category_id=category.id,
                                     club_id=clubs.id))
     else:
@@ -289,9 +295,19 @@ def editClub(category_id, club_id):
 @app.route('/clubs/<int:category_id>/<int:club_id>/delete',
            methods=['GET', 'POST'])
 def deleteClub(category_id, club_id):
+    # redirect user to login if not already
+    if 'username' not in login_session:
+        return redirect('/login')
     categories = session.query(Category).all()
     category = session.query(Category).filter_by(id=category_id).one()
     clubs = session.query(Club).filter_by(id=club_id).one()
+    # authorization
+    try:
+        creator = getUserInfo(clubs.user_id)
+    except:
+        pass
+    if creator.id != getUserID(login_session['googid']):
+        return redirect(url_for('clubCategory', category_id=category.id))
     if request.method == 'POST':
         session.delete(clubs)
         session.commit()
@@ -301,7 +317,6 @@ def deleteClub(category_id, club_id):
                                category=category, clubs=clubs)
 
 # JSON
-
 
 # all clubs
 @app.route('/clubs/JSON')
